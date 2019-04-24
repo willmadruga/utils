@@ -10,14 +10,13 @@ import random
 #
 # Use on-demand or listen for changes with watchdog
 # pip3 install watchdog
-# watchmedo shell-command --command='folder_organizer.py' 
+# watchmedo shell-command --command='folder_organizer.py'
 
 # Constants
 FILE_TYPES = "*.*"
 DEFAULT_DIR = "/home/wmadruga/Downloads/"
 TARGET_DIR = sys.argv[1]+"/"+FILE_TYPES if len(sys.argv) > 1 else DEFAULT_DIR + FILE_TYPES
 DIRECTORY = TARGET_DIR.rpartition('/')[0]
-
 
 # Creates the destination folder if non-exitent
 def create_destination(folder):
@@ -41,7 +40,7 @@ def move_to(folder, file):
     shutil.move(file, dest_file)
     shutil.move(dest_file, path)
 
-if __name__ == "__main__":
+def main():
   files = glob.glob(TARGET_DIR)
   for f in files:
     filename = f.rsplit('/')[-1]
@@ -49,3 +48,5 @@ if __name__ == "__main__":
     create_destination(folder)
     move_to(folder, f)
 
+
+if __name__ == "__main__": main()

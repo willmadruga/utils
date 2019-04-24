@@ -5,10 +5,7 @@ import urllib2
 import subprocess
 from bs4 import BeautifulSoup
 
-def play(audio_file_path):
-  subprocess.call(["ffplay", "-nodisp", "-autoexit", audio_file_path])
-
-if __name__ == "__main__":
+def main():
   target_value = 55
   url = "https://www.marketwatch.com/investing/stock/orcl"
   while (True):
@@ -20,3 +17,8 @@ if __name__ == "__main__":
       # Play the gong to remind me to sell :)
       play("./gong.mp3")
     time.sleep( 5 )
+
+def play(audio_file_path):
+  subprocess.call(["ffplay", "-nodisp", "-autoexit", audio_file_path])
+
+if __name__ == "__main__": main()
