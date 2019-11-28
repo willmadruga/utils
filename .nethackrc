@@ -1,0 +1,30 @@
+# use DEC graphics
+OPTIONS=DECgraphics
+
+# Char
+#OPTIONS=name:wmadruga,race:human,role:wizard,gender:male
+
+# Settings:
+OPTIONS=catname:Smeagol, boulder:0
+
+# Turn on:
+OPTIONS=color, autodig, autodescribe, large_font
+
+# Turn off:
+OPTIONS=!rest_on_space
+
+# More Settings:
+OPTIONS=autopickup,pickup_types:$?!/=
+
+# HP
+# ------------------------------------------------------------------------------
+OPTIONS=hitpointbar
+OPTIONS=hilite_status:hitpoints/100%/green&bold
+OPTIONS=hilite_status:hitpoints/<100%/green&normal
+OPTIONS=hilite_status:hitpoints/<=75%/yellow&normal
+OPTIONS=hilite_status:hitpoints/<=50%/red&normal
+OPTIONS=hilite_status:hitpoints/<=33%/red&bold
+OPTIONS=hilite_status:hitpoints/<=15%/red&inverse
+
+# Hide specific messages:
+MSGTYPE=hide "You swap places with .*"
