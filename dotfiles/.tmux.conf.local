@@ -294,3 +294,12 @@ tmux_conf_copy_to_os_clipboard=false
 
 # move status line to top
 #set -g status-position top
+
+unbind C-b
+set-option -g prefix `
+set-option -g allow-rename off
+set -g base-index 1
+bind = split-window -h
+bind - split-window -v
+unbind '"'
+unbind %

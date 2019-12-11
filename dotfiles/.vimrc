@@ -86,10 +86,13 @@ nnoremap <silent><Leader><C-]> <C-w><C-]><C-w>T
 " Copy whole file to clipboard (requires vim-x11)
 noremap <leader>y :%y+<CR> 
 
+" Spell check
+nnoremap <leader>s :set spell!<CR>
+
 " ##########
 " Commands #################################################################################
 " ##########
-command! MakeTags !ctags -R .
+command! MakeTags !ctags -R --exclude=.git --exclude=node_modules --exclude=coverage --exclude=.nyc_output
 command! Grunt !grunt
 
 " ##########
@@ -112,3 +115,4 @@ nnoremap <leader>nssl :-1read $HOME/.vim/snippets/NS_Suitelet.js<CR>
 nnoremap <leader>nscs :-1read $HOME/.vim/snippets/NS_ClientScript.js<CR>
 
 " SuiteScript 2.0 - Snippets
+
