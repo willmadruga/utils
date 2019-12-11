@@ -2,7 +2,7 @@
 OPTIONS=DECgraphics
 
 # Char
-#OPTIONS=name:wmadruga,race:human,role:wizard,gender:male
+OPTIONS=name:wmadruga,race:human,role:wizard,gender:male
 
 # Settings:
 OPTIONS=catname:Smeagol, boulder:0
