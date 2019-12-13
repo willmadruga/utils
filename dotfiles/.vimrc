@@ -1,40 +1,76 @@
 execute pathogen#infect()
 
-" #############
-" Set Options #################################################################################
-" #############
+" Options _____________________________________
 
 syntax on
 syntax enable
 filetype plugin indent on
 
+"highlight Comment term=bold cterm=italic ctermfg=white gui=italic guifg=white
+
+" Escape insert mode via 'jj'
+imap jj <ESC>
+
+" Prefer vertical orientation when using :diffsplit
+set diffopt+=vertical
+
+"Double-delete to remove trailing whitespace...
+nmap <silent> <BS><BS>  [Remove trailing whitespace] mz:call TrimTrailingWS()<CR>`z
+
+function! TrimTrailingWS ()
+    if search('\s\+$', 'cnw')
+        :%s/\s\+$//g
+    endif
+endfunction
+
+"I'm sick of typing :%s/.../.../g 
+
+nmap S  [Shortcut for :s///g]  :%s//g<LEFT><LEFT>
+xmap S                         :s//g<LEFT><LEFT>
+
+nmap <expr> M  [Shortcut for :s/<last match>//g]  ':%s/' . @/ . '//g<LEFT><LEFT>'
+xmap <expr> M                                     ':s/' . @/ . '//g<LEFT><LEFT>'
+
+" _____________________________________________
+
 set nocompatible
+set modelines=0
 
 set listchars=tab:▸\ ,eol:¬
+
 set relativenumber
 set number
+
 set ignorecase
 set hlsearch
+set smartcase
+
 set title
 set visualbell
 set noerrorbells
 set cursorline
-set expandtab
 
+set expandtab
 set tabstop=2
 set shiftwidth=2
 set shiftwidth=2
+
 set history=1000
 set undolevels=1000
-set spelllang=en_ca
+"set spelllang=en_ca
 
 set path+=**
 set wildmenu
 
+colorscheme solarized
+set background=dark
+"if has('gui_running')
+"    set background=light
+"else
+"    set background=dark
+"endif
 
-" ################
-" Plugins Config #############################################################################
-" ################
+" Plugins Config ________________________________
 
 " NERDTree
 let g:NERDTreeDirArrowExpandable = '▸'
@@ -51,11 +87,9 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
-let g:syntastic_jslint_checkers=['jslint']
+let g:syntastic_javascript_checkers=['eslint']
 
-" ################
-" Remapping keys ############################################################################
-" ################
+" Remapping keys _______________________________
 
 " switches to 'paste mode' to disable auto-indenting and other things when you paste content
 " You can use <C-r>+ to paste right from the OS paste board
@@ -84,20 +118,17 @@ nmap <silent> <leader>/ :nohlsearch<CR>
 nnoremap <silent><Leader><C-]> <C-w><C-]><C-w>T
 
 " Copy whole file to clipboard (requires vim-x11)
-noremap <leader>y :%y+<CR> 
+noremap <leader>y :%y+<CR>
 
 " Spell check
 nnoremap <leader>s :set spell!<CR>
 
-" ##########
-" Commands #################################################################################
-" ##########
+" Commands ___________________________________
+
 command! MakeTags !ctags -R --exclude=.git --exclude=node_modules --exclude=coverage --exclude=.nyc_output
 command! Grunt !grunt
 
-" ##########
-" Snippets ################################################################################
-" ##########
+" Snippets ___________________________________
 
 " Javascript - General
 nnoremap <leader>fn :-1read $HOME/.vim/snippets/function.js<CR>wi
