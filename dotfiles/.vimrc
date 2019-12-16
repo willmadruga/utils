@@ -6,8 +6,6 @@ syntax on
 syntax enable
 filetype plugin indent on
 
-"highlight Comment term=bold cterm=italic ctermfg=white gui=italic guifg=white
-
 " Escape insert mode via 'jj'
 imap jj <ESC>
 
