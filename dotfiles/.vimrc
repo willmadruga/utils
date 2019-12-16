@@ -64,11 +64,9 @@ set wildmenu
 
 colorscheme solarized
 set background=dark
-"if has('gui_running')
-"    set background=light
-"else
-"    set background=dark
-"endif
+
+set directory=$HOME/.vim/swap
+set backupdir=$HOME/.vim/backup
 
 " Plugins Config ________________________________
 
@@ -88,6 +86,9 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_javascript_checkers=['eslint']
+
+" Tag Bar
+nmap <F8> :TagbarToggle<CR>
 
 " Remapping keys _______________________________
 
@@ -121,7 +122,7 @@ nnoremap <silent><Leader><C-]> <C-w><C-]><C-w>T
 noremap <leader>y :%y+<CR>
 
 " Spell check
-nnoremap <leader>s :set spell!<CR>
+" nnoremap <leader>s :set spell!<CR>
 
 " Commands ___________________________________
 
@@ -132,6 +133,7 @@ command! Grunt !grunt
 
 " Javascript - General
 nnoremap <leader>fn :-1read $HOME/.vim/snippets/function.js<CR>wi
+nnoremap <leader>tst :-1read $HOME/.vim/snippets/test.js<CR>
 
 " SuiteScript 2.0 - Script files
 nnoremap <leader>nsbis :-1read $HOME/.vim/snippets/NS_BundleInstallationScript.js<CR>
