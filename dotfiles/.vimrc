@@ -31,6 +31,8 @@ xmap <expr> M                                     ':s/' . @/ . '//g<LEFT><LEFT>'
 
 " _____________________________________________
 
+set encoding=UTF-8
+
 set nocompatible
 set modelines=0
 
@@ -85,8 +87,12 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_javascript_checkers=['eslint']
 
+" Javascript
+let g:javascript_plugin_jsdoc = 1
+
 " Tag Bar
 nmap <F8> :TagbarToggle<CR>
+
 
 " Remapping keys _______________________________
 
