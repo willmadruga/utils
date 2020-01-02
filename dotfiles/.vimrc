@@ -12,23 +12,6 @@ imap jj <ESC>
 " Prefer vertical orientation when using :diffsplit
 set diffopt+=vertical
 
-"Double-delete to remove trailing whitespace...
-nmap <silent> <BS><BS>  [Remove trailing whitespace] mz:call TrimTrailingWS()<CR>`z
-
-function! TrimTrailingWS ()
-    if search('\s\+$', 'cnw')
-        :%s/\s\+$//g
-    endif
-endfunction
-
-"I'm sick of typing :%s/.../.../g 
-
-nmap S  [Shortcut for :s///g]  :%s//g<LEFT><LEFT>
-xmap S                         :s//g<LEFT><LEFT>
-
-nmap <expr> M  [Shortcut for :s/<last match>//g]  ':%s/' . @/ . '//g<LEFT><LEFT>'
-xmap <expr> M                                     ':s/' . @/ . '//g<LEFT><LEFT>'
-
 " _____________________________________________
 
 set encoding=UTF-8
@@ -57,16 +40,22 @@ set shiftwidth=2
 
 set history=1000
 set undolevels=1000
-"set spelllang=en_ca
+set spelllang=en_ca
 
 set path+=**
 set wildmenu
 
-colorscheme solarized
-set background=dark
+colorscheme dracula
+if has('gui_running')
+  set background=light
+else
+  set background=dark
+endif
 
 set directory=$HOME/.vim/swap
 set backupdir=$HOME/.vim/backup
+
+set switchbuf=usetab
 
 " Plugins Config ________________________________
 
@@ -126,7 +115,7 @@ nnoremap <silent><Leader><C-]> <C-w><C-]><C-w>T
 noremap <leader>y :%y+<CR>
 
 " Spell check
-" nnoremap <leader>s :set spell!<CR>
+nnoremap <leader>s :set spell!<CR>
 
 " Commands ___________________________________
 
