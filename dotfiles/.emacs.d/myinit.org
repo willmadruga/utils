@@ -1,12 +1,15 @@
-* Notes!
+* Notes
 ** How to edit the src below 
 *** C-c ' to open source in a separate window editor (for better code formatting)
 *** C-c ' to come back h
+** use-package options, see https://github.com/jwiegley/use-package
 ** TODO: Javascript
 *** eslint
 *** syntax
 *** auto-completion (from other js files)
 *** code snippets
+*** code folding    
+
 
 * Interface config
 
@@ -16,7 +19,7 @@
   (scroll-bar-mode -1)
   (fset 'yes-or-no-p 'y-or-n-p)
   (global-set-key (kbd "<f5>") 'revert-buffer)
-
+  (setq display-line-numbers-type t)
   (setq inhibit-startup-message t)
 
   ;; ido stuff
@@ -27,6 +30,7 @@
   (defalias 'list-buffers 'ibuffer)
 
   (setq make-backup-file nil) ;; disable backup files
+
   ;; files backup management
   ;;(setq backup-directory-alist '(("." . "~/.emac.d/saves")))
   ;;(setq backup-by-copying t)
@@ -35,13 +39,25 @@
   ;;      kept-old-versions 1
   ;;      version-control t)
 
+  ;; do not use tabs to ident code
+  (setq-default indent-tabs-mode nil)
+  (setq tab-width 2)
+
 #+END_SRC
 
+
 * Packages
-** try
+** package auto update
   #+BEGIN_SRC emacs-lisp
-   (use-package try
-     :ensure t)
+  (use-package auto-package-update
+  :ensure t
+  :config
+  ;; Delete residual old versions
+  (setq auto-package-update-delete-old-versions t)
+  ;; Do not bother me when updates have taken place.
+  (setq auto-package-update-hide-results t)
+  ;; Update installed packages at startup if there is an update pending.
+  (auto-package-update-maybe))
   #+END_SRC
 
 ** which-key
@@ -70,13 +86,6 @@
    (use-package ace-window
      :ensure t
      :init (global-set-key [remap other-window] 'ace-window))
- #+END_SRC
-
-** Make golden-ratio and ace-window work together
- #+BEGIN_SRC emacs-lisp
-   (setq golden-ratio-extra-commands
-	 (append golden-ratio-extra-commands
-		 '(ace-window)))
  #+END_SRC
 
 ** councel
@@ -152,15 +161,75 @@
  #+BEGIN_SRC emacs-lisp
    (use-package projectile
      :ensure t
-     :bind (("C-c p" . projectile-command-map))
-     :config
-     (projectile-mode 1))
+     :init
+     (progn
+       (projectile-mode +1)
+       (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+       (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)))
  #+END_SRC
 ** flycheck
+ Check code syntax. Requires binaries installed for each language.
  #+BEGIN_SRC emacs-lisp
    (use-package flycheck
      :ensure t
      :config
      (global-flycheck-mode))
  #+END_SRC
+** aggressive-indent
+ Code indentation 
+ #+BEGIN_SRC emacs-lisp
+   (use-package aggressive-indent
+     :ensure t
+     :config
+     (global-aggressive-indent-mode 1))
+ #+END_SRC
 
+** indent-guide
+ Lines visually guiding indentation
+ #+BEGIN_SRC emacs-lisp
+   (use-package indent-guide
+     :ensure t
+     :config
+     (indent-guide-global-mode 1))
+ #+END_SRC
+** magit
+ git
+ #+BEGIN_SRC emacs-lisp
+   (use-package magit
+     :ensure t
+     :config (global-set-key (kbd "C-x g") 'magit-status))
+ #+END_SRC
+
+** perspective
+ Segregate tasks within workspaces
+ #+BEGIN_SRC emacs-lisp
+   (use-package perspective
+     :ensure t
+     :config
+     (persp-mode)
+     (persp-turn-on-modestring))
+ #+END_SRC
+** shell-pop
+ Pop-up a shell
+ #+BEGIN_SRC emacs-lisp
+   (use-package shell-pop
+     :ensure t
+     :config
+     (shell-pop-universal-key "C-`")
+     (shell-pop-window-size 30)
+     (shell-pop-position "bottom")
+     (shell-pop-term-shel "/usr/bin/zsh"))
+ #+END_SRC
+
+* Other configuration
+** golden-ratio tweaks
+Help golden-ratio to 'see' other commands
+ #+BEGIN_SRC emacs-lisp
+   (setq golden-ratio-extra-commands
+	 (append golden-ratio-extra-commands
+		 '(ace-window)))
+ #+END_SRC
+** org-mode
+ #+BEGIN_SRC emacs-lisp
+ (setq org-directory "~/org/")
+ #+END_SRC
