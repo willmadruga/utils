@@ -19,8 +19,10 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-export MANPATH="/usr/local/man:$MANPATH"
-export PATH="$PATH:/home/wmadruga/.emacs.d/bin"
+export MANPATH="/usr/local/man:$MANPATH:$NPM_PACKAGES/share/man"
+export NPM_PACKAGES="$HOME/.npm-packages"
+export PATH="$PATH:$HOME/.emacs.d/bin:$NPM_PACKAGES/bin"
+export NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
