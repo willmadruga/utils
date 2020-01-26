@@ -1,8 +1,8 @@
-;; [[file:~/git/wmadruga-utils/dotfiles/emacs.d/my-init.org::*Init][Init:1]]
+;; [[file:~/src/wmadruga-utils/dotfiles/emacs.d/my-init.org::*Init][Init:1]]
 (setq gc-cons-threshold (* 50 1000 1000)) ;; make startup faster by reducing garbage collection frequency
 ;; Init:1 ends here
 
-;; [[file:~/git/wmadruga-utils/dotfiles/emacs.d/my-init.org::*UI%20tweaks][UI tweaks:1]]
+;; [[file:~/src/wmadruga-utils/dotfiles/emacs.d/my-init.org::*UI%20tweaks][UI tweaks:1]]
 (setq inhibit-startup-message t
       inhibit-startup-screen t
       initial-scratch-message nil)
@@ -10,7 +10,7 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 ;; UI tweaks:1 ends here
 
-;; [[file:~/git/wmadruga-utils/dotfiles/emacs.d/my-init.org::*Company][Company:1]]
+;; [[file:~/src/wmadruga-utils/dotfiles/emacs.d/my-init.org::*Company][Company:1]]
 (use-package company
   :ensure t)
 (global-company-mode)
@@ -20,17 +20,17 @@
 (define-key company-active-map (kbd "C-:") 'helm-company)
 ;; Company:1 ends here
 
-;; [[file:~/git/wmadruga-utils/dotfiles/emacs.d/my-init.org::*Define%20Word][Define Word:1]]
+;; [[file:~/src/wmadruga-utils/dotfiles/emacs.d/my-init.org::*Define%20Word][Define Word:1]]
 (use-package define-word
   :ensure t)
 ;; Define Word:1 ends here
 
-;; [[file:~/git/wmadruga-utils/dotfiles/emacs.d/my-init.org::*Dracula%20Theme][Dracula Theme:1]]
+;; [[file:~/src/wmadruga-utils/dotfiles/emacs.d/my-init.org::*Dracula%20Theme][Dracula Theme:1]]
 (use-package dracula-theme
   :ensure t)
 ;; Dracula Theme:1 ends here
 
-;; [[file:~/git/wmadruga-utils/dotfiles/emacs.d/my-init.org::*Drag%20Stuff][Drag Stuff:1]]
+;; [[file:~/src/wmadruga-utils/dotfiles/emacs.d/my-init.org::*Drag%20Stuff][Drag Stuff:1]]
 (use-package drag-stuff
   :ensure t
   :bind (("<M-up>" . drag-stuff-up)
@@ -40,13 +40,13 @@
 (drag-stuff-global-mode)
 ;; Drag Stuff:1 ends here
 
-;; [[file:~/git/wmadruga-utils/dotfiles/emacs.d/my-init.org::*Golden%20Ratio][Golden Ratio:1]]
+;; [[file:~/src/wmadruga-utils/dotfiles/emacs.d/my-init.org::*Golden%20Ratio][Golden Ratio:1]]
 (use-package golden-ratio
   :ensure t)
 (golden-ratio-mode)
 ;; Golden Ratio:1 ends here
 
-;; [[file:~/git/wmadruga-utils/dotfiles/emacs.d/my-init.org::*Helm][Helm:1]]
+;; [[file:~/src/wmadruga-utils/dotfiles/emacs.d/my-init.org::*Helm][Helm:1]]
 ; Incremental and narrowing framework
 (use-package helm
   :ensure t)
@@ -65,6 +65,7 @@
   :ensure t
   :config (helm-projectile-on))
 (global-set-key (kbd "s-P") 'helm-projectile-find-file)
+(setq projectile-completion-system 'helm)
 
 ; Efficiently hopping squeezed lines
 (use-package helm-swoop
@@ -73,43 +74,46 @@
 ; Configuration
 (require 'helm-config)
 (helm-mode 1)
+(helm-adaptive-mode 1)
+(helm-projectile-on)
 (helm-autoresize-mode 1)
-(setq helm-follow-mode-persistent t)
 (global-set-key (kbd "M-x") 'helm-M-x)
-(setq helm-M-x-fuzzy-match t)
-(setq helm-buffers-fuzzy-matching t)
-(setq helm-recentf-fuzzy-match t)
+(set-face-attribute 'helm-selection nil :background "darkblue")
 (setq helm-apropos-fuzzy-match t)
+(setq helm-buffers-fuzzy-matching t)
+(setq helm-follow-mode-persistent t)
+(setq helm-M-x-fuzzy-match t)
+(setq helm-move-to-line-cycle-in-source t)
+(setq helm-recentf-fuzzy-match t)
 (setq helm-split-window-inside-p t)
 ;; Helm:1 ends here
 
-;; [[file:~/git/wmadruga-utils/dotfiles/emacs.d/my-init.org::*Javascript%20Support][Javascript Support:1]]
+;; [[file:~/src/wmadruga-utils/dotfiles/emacs.d/my-init.org::*Javascript%20Support][Javascript Support:1]]
 (use-package js2-mode
   :ensure t
   :config (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode)))
 (setq js-indent-level 2)
 ;; Javascript Support:1 ends here
 
-;; [[file:~/git/wmadruga-utils/dotfiles/emacs.d/my-init.org::*Modeline][Modeline:1]]
+;; [[file:~/src/wmadruga-utils/dotfiles/emacs.d/my-init.org::*Modeline][Modeline:1]]
 (use-package doom-modeline
   :ensure t
   :hook (after-init . doom-modeline-mode))
 ;; Modeline:1 ends here
 
-;; [[file:~/git/wmadruga-utils/dotfiles/emacs.d/my-init.org::*Neotree][Neotree:1]]
+;; [[file:~/src/wmadruga-utils/dotfiles/emacs.d/my-init.org::*Neotree][Neotree:1]]
 (use-package neotree
   :ensure t)
 ;; Neotree:1 ends here
 
-;; [[file:~/git/wmadruga-utils/dotfiles/emacs.d/my-init.org::*Org%20Bullets][Org Bullets:1]]
+;; [[file:~/src/wmadruga-utils/dotfiles/emacs.d/my-init.org::*Org%20Bullets][Org Bullets:1]]
 (use-package org-bullets
   :ensure t)
 (setq org-bullets-bullet-list '("■" "◆" "▲" "▶"))
-(add-hook 'org-mode #'org-bullets-mode)
-(org-bullets-mode 1)
+(org-bullets-mode)
 ;; Org Bullets:1 ends here
 
-;; [[file:~/git/wmadruga-utils/dotfiles/emacs.d/my-init.org::*Projectile][Projectile:1]]
+;; [[file:~/src/wmadruga-utils/dotfiles/emacs.d/my-init.org::*Projectile][Projectile:1]]
 (use-package projectile
   :ensure t
   :config (progn
@@ -118,20 +122,20 @@
 (projectile-global-mode)
 ;; Projectile:1 ends here
 
-;; [[file:~/git/wmadruga-utils/dotfiles/emacs.d/my-init.org::*Smart%20Parentheses][Smart Parentheses:1]]
+;; [[file:~/src/wmadruga-utils/dotfiles/emacs.d/my-init.org::*Smart%20Parentheses][Smart Parentheses:1]]
 (use-package smartparens
   :ensure t)
 (add-hook 'js-mode-hook #'smartparens-mode)
 (add-hook 'emacs-lisp-mode #'smartparens-mode)
 ;; Smart Parentheses:1 ends here
 
-;; [[file:~/git/wmadruga-utils/dotfiles/emacs.d/my-init.org::*Which%20Key][Which Key:1]]
+;; [[file:~/src/wmadruga-utils/dotfiles/emacs.d/my-init.org::*Which%20Key][Which Key:1]]
 (use-package which-key
   :ensure t)
 (which-key-mode)
 ;; Which Key:1 ends here
 
-;; [[file:~/git/wmadruga-utils/dotfiles/emacs.d/my-init.org::*Awesome%20Tab][Awesome Tab:1]]
+;; [[file:~/src/wmadruga-utils/dotfiles/emacs.d/my-init.org::*Awesome%20Tab][Awesome Tab:1]]
 ;; git clone --depth=1 https://github.com/manateelazycat/awesome-tab.git
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/elisp/awesome-tab/"))
 (require 'awesome-tab)
@@ -141,36 +145,43 @@
       '(helm-source-awesome-tab-group))
 ;; Awesome Tab:1 ends here
 
-;; [[file:~/git/wmadruga-utils/dotfiles/emacs.d/my-init.org::*Yasnippet][Yasnippet:1]]
+;; [[file:~/src/wmadruga-utils/dotfiles/emacs.d/my-init.org::*Yasnippet][Yasnippet:1]]
 (use-package yasnippet
     :ensure t)
 (yas-global-mode)
 (setq yas-snippets-dirs '("~/.emacs.d/snippets"))
 ;; Yasnippet:1 ends here
 
-;; [[file:~/git/wmadruga-utils/dotfiles/emacs.d/my-init.org::*Defaults][Defaults:1]]
+;; [[file:~/src/wmadruga-utils/dotfiles/emacs.d/my-init.org::*Defaults][Defaults:1]]
 (setq auto-revert-interval 1            ; Refresh buffers fast
-      custom-file (make-temp-file "")   ; Discard customization's
-      echo-keystrokes 0.1               ; Show keystrokes asap
-      inhibit-startup-message t         ; No splash screen please
-      initial-scratch-message nil       ; Clean scratch buffer
-      recentf-max-saved-items 100       ; Show more recent files
-      ring-bell-function 'ignore        ; Quiet
-      sentence-end-double-space nil     ; No double space
-      tab-width 2                       ; 2 spaces
-      make-backup-files nil             ; stop creating backup~ files
-      auto-save-default nil             ; stop creating #autosave# files
-      create-lockfiles nil              ; stop creating .# files
-  )
+       custom-file (make-temp-file "")   ; Discard customization's
+       echo-keystrokes 0.1               ; Show keystrokes asap
+       inhibit-startup-message t         ; No splash screen please
+       initial-scratch-message nil       ; Clean scratch buffer
+       recentf-max-saved-items 100       ; Show more recent files
+       ring-bell-function 'ignore        ; Quiet
+       sentence-end-double-space nil     ; No double space
+       tab-width 2                       ; 2 spaces
+       make-backup-files nil             ; stop creating backup~ files
+       auto-save-default nil             ; stop creating #autosave# files
+       create-lockfiles nil              ; stop creating .# files
+   )
 
-(setq-default frame-title-format "%b (%f)"
-              indent-tabs-mode nil
-              fill-column 140
-              tab-width 2)
-(setenv "BROWSER" "firefox")
+ (setq-default frame-title-format "%b (%f)"
+               indent-tabs-mode nil
+               fill-column 140
+               tab-width 2)
+
+(setq-default prettify-symbols-alist '(("lambda" . ?λ)
+                                       ("delta" . ?Δ)
+                                       ("gamma" . ?Γ)
+                                       ("phi" . ?φ)
+                                       ("psi" . ?ψ)))
+
+ (setenv "BROWSER" "firefox")
 ;; Defaults:1 ends here
 
-;; [[file:~/git/wmadruga-utils/dotfiles/emacs.d/my-init.org::*Standard%20modes%20%5Bon/off%5D][Standard modes [on/off]:1]]
+;; [[file:~/src/wmadruga-utils/dotfiles/emacs.d/my-init.org::*Standard%20modes%20%5Bon/off%5D][Standard modes [on/off]:1]]
 ;; Turn-off modes
 (dolist (mode
    '(menu-bar-mode                ; No menu bar
@@ -190,7 +201,7 @@
   (funcall mode 1))
 ;; Standard modes [on/off]:1 ends here
 
-;; [[file:~/git/wmadruga-utils/dotfiles/emacs.d/my-init.org::*Utils][Utils:1]]
+;; [[file:~/src/wmadruga-utils/dotfiles/emacs.d/my-init.org::*Utils][Utils:1]]
 ;; Tell me how long is it taking to startup?
 (add-hook 'emacs-startup-hook
           (lambda ()
@@ -207,8 +218,21 @@
    (let ((private-file (concat user-emacs-directory "elisp/private.el")))
      (when (file-exists-p private-file)
        (load-file private-file)))))
+
+(defun duplicate-line ()
+  (interactive)
+  (let* ((cursor-column (current-column)))
+    (move-beginning-of-line 1)
+    (kill-line)
+    (yank)
+    (open-line 1)
+    (next-line 1)
+    (yank)
+    (move-to-column cursor-column)))
 ;; Utils:1 ends here
 
-;; [[file:~/git/wmadruga-utils/dotfiles/emacs.d/my-init.org::*Keybindings][Keybindings:1]]
+;; [[file:~/src/wmadruga-utils/dotfiles/emacs.d/my-init.org::*Keybindings%20&%20Hooks][Keybindings & Hooks:1]]
 (global-set-key (kbd "C-a") 'mark-whole-buffer)       ;; select all
-;; Keybindings:1 ends here
+(global-set-key (kbd "<C-s-down>") 'duplicate-line)   ;; duplicate line
+(add-hook 'prog-mode-hook 'flyspell-prog-mode)        ;; spell check
+;; Keybindings & Hooks:1 ends here

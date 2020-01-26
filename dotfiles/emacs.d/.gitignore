@@ -1,5 +1,6 @@
 # -*- mode: gitignore; -*-
 
+# Emacs
 *~
 \#*\#
 /.emacs.desktop
@@ -9,51 +10,21 @@ auto-save-list
 tramp
 .\#*
 
-# Org-mode
-.org-id-locations
-*_archive
-
-# flymake-mode
-*_flymake.*
-
-# eshell files
+# Directory configuration
+.dir-locals.el
+.cache
+/elisp/
+/elpa/
 /eshell/history
 /eshell/lastdir
 
-# elpa packages
-/elpa/
-
-# reftex files
-*.rel
-
-# AUCTeX auto folder
-/auto/
-
-# cask packages
-.cask/
-dist/
-
-# Flycheck
-flycheck_*.el
-
-# server auth directory
-/server/
-
-# projectiles files
+# Files configuration
 .projectile
 projectile-bookmarks.eld
-
-# directory configuration
-.dir-locals.el
-
-# network security
-/network-security.data
-
-# Recent files
+helm-adaptive-history
+.org-id-locations
+*_archive
+*_flymake.*
+flycheck_*.el
 recentf
-
-# Other elisp files or repo I don't need to push
-/elisp/
-
-# Private functions
 private.el

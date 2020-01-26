@@ -65,41 +65,45 @@
 
 ** Helm
 #+BEGIN_SRC emacs-lisp
-; Incremental and narrowing framework
-(use-package helm
-  :ensure t)
+  ; Incremental and narrowing framework
+  (use-package helm
+    :ensure t)
 
-; Silver search with helm
-(use-package helm-ag
-  :ensure t
-  :config (global-set-key (kbd "s-F") 'helm-projectile-ag))
+  ; Silver search with helm
+  (use-package helm-ag
+    :ensure t
+    :config (global-set-key (kbd "s-F") 'helm-projectile-ag))
 
-; Helm interface for company-mode
-(use-package helm-company
-  :ensure t)
+  ; Helm interface for company-mode
+  (use-package helm-company
+    :ensure t)
 
-; Helm interface for projectile
-(use-package helm-projectile
-  :ensure t
-  :config (helm-projectile-on))
-(global-set-key (kbd "s-P") 'helm-projectile-find-file)
+  ; Helm interface for projectile
+  (use-package helm-projectile
+    :ensure t
+    :config (helm-projectile-on))
+  (global-set-key (kbd "s-P") 'helm-projectile-find-file)
+  (setq projectile-completion-system 'helm)
 
-; Efficiently hopping squeezed lines
-(use-package helm-swoop
-  :ensure t)
+  ; Efficiently hopping squeezed lines
+  (use-package helm-swoop
+    :ensure t)
 
-; Configuration
-(require 'helm-config)
-(helm-mode 1)
-(helm-autoresize-mode 1)
-(setq helm-follow-mode-persistent t)
-(global-set-key (kbd "M-x") 'helm-M-x)
-(setq helm-M-x-fuzzy-match t)
-(setq helm-buffers-fuzzy-matching t)
-(setq helm-recentf-fuzzy-match t)
-(setq helm-apropos-fuzzy-match t)
-(setq helm-split-window-inside-p t)
-
+  ; Configuration
+  (require 'helm-config)
+  (helm-mode 1)
+  (helm-adaptive-mode 1)
+  (helm-projectile-on)
+  (helm-autoresize-mode 1)
+  (global-set-key (kbd "M-x") 'helm-M-x)
+  (set-face-attribute 'helm-selection nil :background "darkblue")
+  (setq helm-apropos-fuzzy-match t)
+  (setq helm-buffers-fuzzy-matching t)
+  (setq helm-follow-mode-persistent t)
+  (setq helm-M-x-fuzzy-match t)
+  (setq helm-move-to-line-cycle-in-source t)
+  (setq helm-recentf-fuzzy-match t)
+  (setq helm-split-window-inside-p t)
 
 #+END_SRC
 
@@ -189,26 +193,34 @@
 
 * Defaults
 #+BEGIN_SRC emacs-lisp
-  (setq auto-revert-interval 1            ; Refresh buffers fast
-        custom-file (make-temp-file "")   ; Discard customization's
-        echo-keystrokes 0.1               ; Show keystrokes asap
-        inhibit-startup-message t         ; No splash screen please
-        initial-scratch-message nil       ; Clean scratch buffer
-        recentf-max-saved-items 100       ; Show more recent files
-        ring-bell-function 'ignore        ; Quiet
-        sentence-end-double-space nil     ; No double space
-        tab-width 2                       ; 2 spaces
-        make-backup-files nil             ; stop creating backup~ files
-        auto-save-default nil             ; stop creating #autosave# files
-        create-lockfiles nil              ; stop creating .# files
-    )
+   (setq auto-revert-interval 1            ; Refresh buffers fast
+         custom-file (make-temp-file "")   ; Discard customization's
+         echo-keystrokes 0.1               ; Show keystrokes asap
+         inhibit-startup-message t         ; No splash screen please
+         initial-scratch-message nil       ; Clean scratch buffer
+         recentf-max-saved-items 100       ; Show more recent files
+         ring-bell-function 'ignore        ; Quiet
+         sentence-end-double-space nil     ; No double space
+         tab-width 2                       ; 2 spaces
+         make-backup-files nil             ; stop creating backup~ files
+         auto-save-default nil             ; stop creating #autosave# files
+         create-lockfiles nil              ; stop creating .# files
+     )
 
-  (setq-default frame-title-format "%b (%f)"
-                indent-tabs-mode nil
-                fill-column 140
-                tab-width 2)
-  (setenv "BROWSER" "firefox")
+   (setq-default frame-title-format "%b (%f)"
+                 indent-tabs-mode nil
+                 fill-column 140
+                 tab-width 2)
+
+  (setq-default prettify-symbols-alist '(("lambda" . ?λ)
+                                         ("delta" . ?Δ)
+                                         ("gamma" . ?Γ)
+                                         ("phi" . ?φ)
+                                         ("psi" . ?ψ)))
+
+   (setenv "BROWSER" "firefox")
 #+END_SRC
+
 
 * Standard modes [on/off]
 #+BEGIN_SRC emacs-lisp
@@ -250,12 +262,26 @@
    (let ((private-file (concat user-emacs-directory "elisp/private.el")))
      (when (file-exists-p private-file)
        (load-file private-file)))))
+
+(defun duplicate-line ()
+  (interactive)
+  (let* ((cursor-column (current-column)))
+    (move-beginning-of-line 1)
+    (kill-line)
+    (yank)
+    (open-line 1)
+    (next-line 1)
+    (yank)
+    (move-to-column cursor-column)))
+
 #+END_SRC
 
 
-* Keybindings
+* Keybindings & Hooks
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "C-a") 'mark-whole-buffer)       ;; select all
+(global-set-key (kbd "<C-s-down>") 'duplicate-line)   ;; duplicate line
+(add-hook 'prog-mode-hook 'flyspell-prog-mode)        ;; spell check
 #+END_SRC
 
 
@@ -267,4 +293,9 @@
 *** General.el
 *** magit
 *** format-all
-** Configure:
+** Try:
+*** More Org-Mode
+*** Calendar (org-agenda)
+*** org-capture
+*** Email
+
