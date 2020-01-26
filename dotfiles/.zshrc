@@ -21,7 +21,7 @@ source $ZSH/oh-my-zsh.sh
 
 export MANPATH="/usr/local/man:$MANPATH:$NPM_PACKAGES/share/man"
 export NPM_PACKAGES="$HOME/.npm-packages"
-export PATH="$PATH:$HOME/.emacs.d/bin:$NPM_PACKAGES/bin"
+export PATH="$PATH:$HOME/bin:$NPM_PACKAGES/bin"
 export NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
 
 # You may need to manually set your language environment
