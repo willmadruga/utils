@@ -10,12 +10,24 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 ;; UI tweaks:1 ends here
 
+;; [[file:~/src/wmadruga-utils/dotfiles/emacs.d/my-init.org::*Awesome%20Tab][Awesome Tab:1]]
+;; git clone --depth=1 https://github.com/manateelazycat/awesome-tab.git
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/elisp/awesome-tab/"))
+(require 'awesome-tab)
+(awesome-tab-mode t)
+(awesome-tab-build-helm-source)
+(setq helm-source-list
+      '(helm-source-awesome-tab-group))
+;; Awesome Tab:1 ends here
+
 ;; [[file:~/src/wmadruga-utils/dotfiles/emacs.d/my-init.org::*Company][Company:1]]
 (use-package company
   :ensure t)
 (global-company-mode)
+
 (setq company-idle-delay 0
       company-minimum-prefix-length 3)
+
 (define-key company-mode-map (kbd "C-:") 'helm-company)
 (define-key company-active-map (kbd "C-:") 'helm-company)
 ;; Company:1 ends here
@@ -39,6 +51,18 @@
    ("<M-right>" . drag-right-stuff)))
 (drag-stuff-global-mode)
 ;; Drag Stuff:1 ends here
+
+;; [[file:~/src/wmadruga-utils/dotfiles/emacs.d/my-init.org::*Flycheck][Flycheck:1]]
+(use-package flycheck
+  :ensure t
+  :init
+  (global-flycheck-mode t))
+;; Flycheck:1 ends here
+
+;; [[file:~/src/wmadruga-utils/dotfiles/emacs.d/my-init.org::*General][General:1]]
+(use-package general
+  :ensure t)
+;; General:1 ends here
 
 ;; [[file:~/src/wmadruga-utils/dotfiles/emacs.d/my-init.org::*Golden%20Ratio][Golden Ratio:1]]
 (use-package golden-ratio
@@ -135,16 +159,6 @@
 (which-key-mode)
 ;; Which Key:1 ends here
 
-;; [[file:~/src/wmadruga-utils/dotfiles/emacs.d/my-init.org::*Awesome%20Tab][Awesome Tab:1]]
-;; git clone --depth=1 https://github.com/manateelazycat/awesome-tab.git
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/elisp/awesome-tab/"))
-(require 'awesome-tab)
-(awesome-tab-mode t)
-(awesome-tab-build-helm-source)
-(setq helm-source-list
-      '(helm-source-awesome-tab-group))
-;; Awesome Tab:1 ends here
-
 ;; [[file:~/src/wmadruga-utils/dotfiles/emacs.d/my-init.org::*Yasnippet][Yasnippet:1]]
 (use-package yasnippet
     :ensure t)
@@ -232,7 +246,12 @@
 ;; Utils:1 ends here
 
 ;; [[file:~/src/wmadruga-utils/dotfiles/emacs.d/my-init.org::*Keybindings%20&%20Hooks][Keybindings & Hooks:1]]
-(global-set-key (kbd "C-a") 'mark-whole-buffer)       ;; select all
-(global-set-key (kbd "<C-s-down>") 'duplicate-line)   ;; duplicate line
-(add-hook 'prog-mode-hook 'flyspell-prog-mode)        ;; spell check
+(add-hook 'prog-mode-hook 'flyspell-prog-mode)        ;; spell Check
+
+;; General
+(general-define-key
+ "C-a" 'mark-whole-buffer
+ "<C-s-down>" 'duplicate-line
+ "C-c d" 'define-word-at-point
+)
 ;; Keybindings & Hooks:1 ends here

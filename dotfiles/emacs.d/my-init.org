@@ -7,6 +7,8 @@
 #+BEGIN_SRC emacs-lisp
 (setq gc-cons-threshold (* 50 1000 1000)) ;; make startup faster by reducing garbage collection frequency
 #+END_SRC
+
+
 * UI tweaks
 #+BEGIN_SRC emacs-lisp
   (setq inhibit-startup-message t
@@ -16,23 +18,40 @@
   (fset 'yes-or-no-p 'y-or-n-p)
 #+END_SRC
 
+
 * Packages
+
+** Awesome Tab
+#+BEGIN_SRC emacs-lisp
+  ;; git clone --depth=1 https://github.com/manateelazycat/awesome-tab.git
+  (add-to-list 'load-path (expand-file-name "~/.emacs.d/elisp/awesome-tab/"))
+  (require 'awesome-tab)
+  (awesome-tab-mode t)
+  (awesome-tab-build-helm-source)
+  (setq helm-source-list
+        '(helm-source-awesome-tab-group))
+#+END_SRC
+
+
 ** Company
 #+BEGIN_SRC emacs-lisp
 (use-package company
   :ensure t)
 (global-company-mode)
+
 (setq company-idle-delay 0
       company-minimum-prefix-length 3)
+
 (define-key company-mode-map (kbd "C-:") 'helm-company)
 (define-key company-active-map (kbd "C-:") 'helm-company)
+
 #+END_SRC
 
 
 ** Define Word
 #+BEGIN_SRC emacs-lisp
-(use-package define-word
-  :ensure t)
+  (use-package define-word
+    :ensure t)
 #+END_SRC
 
 
@@ -52,6 +71,22 @@
    ("<M-left>" . drag-stuff-left)
    ("<M-right>" . drag-right-stuff)))
 (drag-stuff-global-mode)
+#+END_SRC
+
+
+** Flycheck
+#+BEGIN_SRC emacs-lisp
+  (use-package flycheck
+    :ensure t
+    :init
+    (global-flycheck-mode t))
+#+END_SRC
+
+
+** General
+#+BEGIN_SRC emacs-lisp
+  (use-package general
+    :ensure t)
 #+END_SRC
 
 
@@ -169,18 +204,6 @@
 #+END_SRC
 
 
-** Awesome Tab
-#+BEGIN_SRC emacs-lisp
-  ;; git clone --depth=1 https://github.com/manateelazycat/awesome-tab.git
-  (add-to-list 'load-path (expand-file-name "~/.emacs.d/elisp/awesome-tab/"))
-  (require 'awesome-tab)
-  (awesome-tab-mode t)
-  (awesome-tab-build-helm-source)
-  (setq helm-source-list
-        '(helm-source-awesome-tab-group))
-#+END_SRC
-
-
 ** Yasnippet
 #+BEGIN_SRC emacs-lisp
   (use-package yasnippet
@@ -279,18 +302,24 @@
 
 * Keybindings & Hooks
 #+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "C-a") 'mark-whole-buffer)       ;; select all
-(global-set-key (kbd "<C-s-down>") 'duplicate-line)   ;; duplicate line
-(add-hook 'prog-mode-hook 'flyspell-prog-mode)        ;; spell check
+
+  (add-hook 'prog-mode-hook 'flyspell-prog-mode)        ;; spell Check
+
+  ;; General
+  (general-define-key
+   "C-a" 'mark-whole-buffer
+   "<C-s-down>" 'duplicate-line
+   "C-c d" 'define-word-at-point
+  )
+
+
 #+END_SRC
 
 
 * TODOS
 ** Install
-*** Flyspell
 *** JS linting
 ** Consider installing
-*** General.el
 *** magit
 *** format-all
 ** Try:
