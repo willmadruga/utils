@@ -1,0 +1,18 @@
+#!/usr/bin/env bb
+;; depends on: https://github.com/borkdude/babashka
+
+(defn get-username []
+  (first (str/split-lines (get (shell/sh "whoami") :out))))
+
+(defn is-mine? [value]
+  (str/includes? value (get-username)))
+
+(defn format-results [val]
+  (str/replace (second (str/split val #" ")) #"refs/remotes/|refs/heads/|refs/" ""))
+
+(doseq [e
+        (map format-results
+             (filter is-mine?
+                     (str/split-lines
+                      (get (shell/sh "git" "for-each-ref" "--format=%(authoremail) %(refname)") :out))))]
+  (println e))
