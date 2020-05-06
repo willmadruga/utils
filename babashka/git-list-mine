@@ -1,5 +1,5 @@
 #!/usr/bin/env bb
-;; depends on: https://github.com/borkdude/babashka
+;;-*- mode: clojure -*-
 
 (defn get-username []
   (first (str/split-lines (get (shell/sh "whoami") :out))))
