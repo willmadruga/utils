@@ -1,0 +1,58 @@
+#!/usr/bin/env bb
+;;-*- mode: clojure -*-
+
+(def classic { :work 25 :short-break 5 :long-break 10 :longer-break 4 })
+(def classic-long-break { :work 25 :short-break 5 :long-break 20 :longer-break 4 })
+
+;; Define current pomodoro config
+(def pomodoro-config classic)
+
+(def current-directory (str "/" (str/join "/" (reverse (rest (reverse (rest (str/split *file* #"/")))))))) ;; wow! can I simplify this?
+
+(def message {
+              :work        "TIME TO WORK"
+              :short-break "TAKE A SHORT BREAK"
+              :long-break  "TAKE A LONG BREAK"
+              })
+
+;; Sounds created using BandLab.com, just a couple of gibberish sounds :D
+(def sounds {
+             :work        (str current-directory "/work.mp3")
+             :short-break (str current-directory "/short-break.mp3")
+             :long-break  (str current-directory "/long-break.mp3")
+             })
+
+(def minutes (atom 0))
+(def pomodoro-rounds (atom 0))
+
+(defn wait-a-minute [] (shell/sh "sleep" "60"))
+(defn play-sound [event] (shell/sh "mplayer" (get sounds (keyword event))))
+(defn pop-up [event] (shell/sh "notify-send" (get message (keyword event))))
+
+(defn notify [event]
+  (play-sound (keyword event))
+  (pop-up (keyword event)))
+
+(defn longer-break-in-pomodoro-rounds [] (get pomodoro-config :longer-break))
+(defn increment-pomodoro-rounds [] (swap! pomodoro-rounds inc))
+(defn reset-pomodoro-rounds [] (reset! pomodoro-rounds 0))
+(defn increment-minutes [] (swap! minutes inc))
+
+(defn pomodoro-round [event]
+  (notify (keyword event))
+  (while (< @minutes (get pomodoro-config (keyword event)))
+    (do (wait-a-minute)
+        (increment-minutes))))
+
+(defn pomodoro []
+  (while true
+    (while (< @pomodoro-rounds (longer-break-in-pomodoro-rounds))
+      (do
+        (pomodoro-round :work)
+        (pomodoro-round :short-break)
+        (increment-pomodoro-rounds)))
+    (pomodoro-round :long-break)
+    (reset-pomodoro-rounds)))
+
+(println "Starting my pomodoro Task")
+(pomodoro)
